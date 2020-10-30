@@ -1,0 +1,7 @@
+<%= simple_form_for(Sentence.new) do |f| %>
+	<% if @sentence.start? %>
+		<%= f.hidden_field :start, value: true%>
+	<% end %>
+  <%= f.input :text, as: :text %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>

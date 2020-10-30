@@ -1,0 +1,38 @@
+<div class="container">
+<h1>Hello!</h1>
+<h2>PLease enter your story below</h2>
+<%= link_to "Reset", root_path %>
+  <table>
+    <tbody>
+      <td></td>
+      <td>
+        <div class="top-left">
+          <%= render 'form' %>
+        </div>
+      </td>
+      <tr>
+        <td>
+          <div class="top-right">
+            <%= render 'form' %>
+          </div>
+        </td>
+        <td>
+          <p><%= link_to @sentence.text, sentence_path(@sentence) %></p>
+        </td>
+        <td>
+          <div class="bottom-left">
+            <%= render 'form' %>
+          </div>
+        </td>
+      </tr>
+      <td></td>
+      <td>
+        <div class="bottom-right">
+          <%= render 'form' %>
+        </div>
+      </td>
+    </tbody>
+</table>
+
+</div>
+
