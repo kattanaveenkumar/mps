@@ -1,38 +1,73 @@
 <div class="container">
-<h1>Hello!</h1>
-<h2>PLease enter your story below</h2>
-<%= link_to "Reset", root_path %>
+  <h1>Hello!</h1>
+  <h2>PLease enter your story below</h2>
+  <%= link_to "Reset", root_path %>
   <table>
     <tbody>
-      <td></td>
+    <td></td>
+    <td>
+      <div class="top-left">
+        <% if @sentence.sentence_association.left_id %>
+          <%=link_to Sentence.find(@sentence.sentence_association.left_id).text, sentence_path(@sentence.sentence_association.left_id) %>
+        <% else %>
+          <%= simple_form_for(Sentence.new) do |f| %>
+            <%= f.hidden_field :sentence_id, value: @sentence_assoc&.id %>
+            <%= f.hidden_field :position, value: 'left' %>
+            <%= f.input :text, as: :text %>
+            <%= f.button :submit, class: "btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+    </td>
+    <tr>
       <td>
-        <div class="top-left">
-          <%= render 'form' %>
+        <div class="top-right">
+          <% if @sentence.sentence_association.right_id %>
+            <%=link_to Sentence.find(@sentence.sentence_association.right_id).text, sentence_path(@sentence.sentence_association.right_id) %>
+          <% else %>
+            <%= simple_form_for(Sentence.new) do |f| %>
+              <%= f.hidden_field :sentence_id, value: @sentence_assoc&.id %>
+              <%= f.hidden_field :position, value: 'right' %>
+              <%= f.input :text, as: :text %>
+              <%= f.button :submit, class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
         </div>
       </td>
-      <tr>
-        <td>
-          <div class="top-right">
-            <%= render 'form' %>
-          </div>
-        </td>
-        <td>
-          <p><%= link_to @sentence.text, sentence_path(@sentence) %></p>
-        </td>
-        <td>
-          <div class="bottom-left">
-            <%= render 'form' %>
-          </div>
-        </td>
-      </tr>
-      <td></td>
       <td>
-        <div class="bottom-right">
-          <%= render 'form' %>
+        <p><%= link_to @sentence.text, sentence_path(@sentence) %></p>
+      </td>
+      <td>
+        <div class="bottom-left">
+          <% if @sentence.sentence_association.top_id %>
+            <%=link_to Sentence.find(@sentence.sentence_association.top_id).text, sentence_path(@sentence.sentence_association.top_id) %>
+          <% else %>
+            <%= simple_form_for(Sentence.new) do |f| %>
+              <%= f.hidden_field :sentence_id, value: @sentence_assoc&.id %>
+              <%= f.hidden_field :position, value: 'top' %>
+              <%= f.input :text, as: :text %>
+              <%= f.button :submit, class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
         </div>
       </td>
+    </tr>
+    <td></td>
+    <td>
+      <div class="bottom-right">
+        <% if @sentence.sentence_association.down_id %>
+          <%=link_to Sentence.find(@sentence.sentence_association.down_id).text, sentence_path(@sentence.sentence_association.down_id) %>
+        <% else %>
+          <%= simple_form_for(Sentence.new) do |f| %>
+            <%= f.hidden_field :sentence_id, value: @sentence_assoc&.id %>
+            <%= f.hidden_field :position, value: 'down' %>
+            <%= f.input :text, as: :text %>
+            <%= f.button :submit, class: "btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+    </td>
     </tbody>
-</table>
-
+  </table>
 </div>
 

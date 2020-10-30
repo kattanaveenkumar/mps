@@ -6,6 +6,7 @@ class SentencesController < ApplicationController
 
   def show
     @sentence = Sentence.find(params[:id])
+    @sentence_assoc = @sentence.sentence_association
   end
 
   def new
@@ -14,10 +15,17 @@ class SentencesController < ApplicationController
 
   def create
     @sentence = Sentence.new(sentence_params)
-    byebug
     # @sentence.merge(node: )
     if @sentence.save
-      redirect_to sentence_path(@sentence)
+      @sentence.create_sentence_association
+      if sentence_params[:sentence_id]
+        @sentence_assoc = Sentence.find(sentence_params[:sentence_id]).sentence_association
+        @sentence_assoc.send("#{sentence_params[:position]}_id=", @sentence.id)
+        @sentence_assoc.save
+        redirect_to sentence_path(Sentence.find(sentence_params[:sentence_id]))
+      else
+        redirect_to sentence_path(@sentence)
+      end
     else
       render :new
     end
@@ -26,7 +34,8 @@ class SentencesController < ApplicationController
   private
 
   def sentence_params
-    params.require(:sentence).permit(:text, :node, :start)
+    params.require(:sentence).permit(:text, :node, :start, :sentence_id,
+                                     :position)
   end
 
   def set_sentence

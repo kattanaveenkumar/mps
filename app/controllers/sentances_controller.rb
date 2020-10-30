@@ -23,7 +23,7 @@ class SentancesController < ApplicationController
     story_hash
   end
 
-  def link_story_to_another(current_story_id, position, next_story_id):
+  def link_story_to_another(current_story_id, position, next_story_id)
     stories[current_story_id][position] = next_story_id
   end
 end
